@@ -4,6 +4,7 @@ import 'package:flutter/src/widgets/container.dart';
 import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_to_do_app/services/notification_sevice.dart';
 import 'package:flutter_to_do_app/services/themes_services.dart';
+import 'package:flutter_to_do_app/ui/add_task_page.dart';
 import 'package:flutter_to_do_app/ui/theme.dart';
 import 'package:flutter_to_do_app/ui/widgets/button.dart';
 import 'package:get/get.dart';
@@ -44,46 +45,47 @@ class _HomePageState extends State<HomePage> {
 
   Container _addDateBar() {
     return Container(
-          margin: EdgeInsets.only(top: 20, left: 20),
-          child: DatePicker(
-            DateTime.now(),
-            height: 100,
-            width: 60,
-            initialSelectedDate: DateTime.now(),
-            selectionColor: Colors.orange,
-            selectedTextColor: Colors.white,
-            dateTextStyle: GoogleFonts.lato(
-              textStyle: const TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey,
-              ),
-            ),
-            dayTextStyle: GoogleFonts.lato(
-              textStyle: const TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey,
-              ),
-            ),
-            monthTextStyle: GoogleFonts.lato(
-              textStyle: const TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey,
-              ),
-            ),
-            onDateChange: (date) {
-              _selectedDate = date;
-              print(date);
-            },
+      margin: EdgeInsets.only(top: 20, left: 20),
+      child: DatePicker(
+        DateTime.now(),
+        height: 100,
+        width: 60,
+        initialSelectedDate: DateTime.now(),
+        selectionColor: primaryColor,
+        selectedTextColor: Colors.white,
+        dateTextStyle: GoogleFonts.lato(
+          textStyle: const TextStyle(
+            fontSize: 20,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey,
           ),
-        );
+        ),
+        dayTextStyle: GoogleFonts.lato(
+          textStyle: const TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey,
+          ),
+        ),
+        monthTextStyle: GoogleFonts.lato(
+          textStyle: const TextStyle(
+            fontSize: 14,
+            fontWeight: FontWeight.w600,
+            color: Colors.grey,
+          ),
+        ),
+        onDateChange: (date) {
+          _selectedDate = date;
+          print(date);
+        },
+      ),
+    );
   }
 
   Container _addTaskBar() {
     return Container(
-      margin: const EdgeInsets.only(left: 15, right: 15, top: 10),
+      margin: const EdgeInsets.only(left: 15, right: 15, top:
+       10),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
@@ -105,7 +107,11 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           ),
-          MyButton(label: "+ Add Task", onTap: () => null)
+          MyButton(
+              label: "+ Add Task",
+              onTap: () {
+                Get.to(AddTaskPage());
+              }),
         ],
       ),
     );
@@ -125,13 +131,13 @@ class _HomePageState extends State<HomePage> {
       leading: GestureDetector(
         onTap: () {
           ThemeService().switchTheme();
-          // notifyHelper.displayNotification(
-          //   title: "Theme Changed",
-          //   body: Get.isDarkMode
-          //       ? "Activated Light Theme"
-          //       : "Activated Dark Theme",
-          // );
-          // notifyHelper.scheduledNotification();
+          notifyHelper.displayNotification(
+            title: "Theme Changed",
+            body: Get.isDarkMode
+                ? "Activated Light Theme"
+                : "Activated Dark Theme",
+          );
+          //notifyHelper.scheduledNotification();
         },
         child: Icon(
           Get.isDarkMode ? Icons.sunny : Icons.nightlight_round,
